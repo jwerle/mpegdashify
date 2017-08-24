@@ -1,0 +1,41 @@
+#!/usr/bin/env node
+
+const { extname } = require('path')
+const { spawn } = require('child_process')
+
+const MP4BOX = process.env.MP4BOX || 'MP4Box'
+
+const argv = process.argv.slice(2)
+const input = argv.splice(-1, 1)[0]
+
+if (null == input) {
+  console.error("error: expecting input file")
+  usage()
+  process.exit(1)
+}
+
+if ('-h' == input) {
+  usage()
+  process.exit(1)
+}
+
+if ('.m3u8' == extname(input)) {
+  argv.unshift('m3u8')
+  argv.unshift('-mpd')
+} else if (-1 == argv.join('').indexOf('-dash')) {
+  const index = argv.indexOf('-frag')
+  if (-1 != index) {
+    argv.unshift(argv[index + 1] || '4000')
+  } else {
+    argv.unshift('4000')
+  }
+  argv.unshift('-dash')
+}
+
+const {stdout, stderr} = spawn(MP4BOX, argv)
+stdout.pipe(process.stdout)
+stderr.pipe(process.stderr)
+
+function usage() {
+  console.error("usage: mpegdashify [...options] <input>")
+}

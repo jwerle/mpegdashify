@@ -1,0 +1,24 @@
+{
+  "name": "mpegdashify",
+  "version": "1.0.0",
+  "description": "Quickly spit out a MPD file and its segments with MP4Box",
+  "main": "bin/mpegdashify",
+  "preferGlobal": true,
+  "bin": {
+    "mpegdashify": "bin/mpegdashify",
+    "dashify": "bin/mpegdashify"
+  },
+  "scripts": {
+    "test": ":"
+  },
+  "keywords": [
+    "mp4",
+    "box",
+    "mpeg",
+    "dash",
+    "mux"
+  ],
+  "author": "Joseph Werle <joseph.werle@gmail.com>",
+  "license": "MIT",
+  "dependencies": {}
+}
